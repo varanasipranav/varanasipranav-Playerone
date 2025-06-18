@@ -17,38 +17,35 @@ export default function Form() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
+  console.log(formData)
 
-    // Replace this with your actual Google Form URL
-    const googleFormURL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse';
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbyeGBShHT1dn42DpuD6pu40zgZJIVxZXUZ4n5lMufcz/dev';
 
-    // Replace entry.xxxxxx with your actual entry IDs from Google Form
-    const data = new FormData();
-    data.append('entry.1234567890', formData.ign);       // In-Game Name
-    data.append('entry.2345678901', formData.igid);      // In-Game ID
-    data.append('entry.3456789012', formData.email);     // Email
-    data.append('entry.4567890123', formData.whatsapp);  // WhatsApp Number
-    data.append('entry.5678901234', formData.name);      // Name
+  const urlEncodedData = new URLSearchParams();
+  for (let key in formData) {
+    urlEncodedData.append(key, formData[key]);
+  }
 
-    fetch(googleFormURL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: data
-    }).then(() => {
-      alert('Submitted Successfully!');
-      setFormData({
-        ign: '',
-        igid: '',
-        email: '',
-        whatsapp: '',
-        name: ''
-      });
-    }).catch((error) => {
-      console.error('Error!', error.message);
+  fetch(scriptURL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: urlEncodedData.toString(),
+  })
+    .then(res => res.json())
+    .then(response => {
+      console.log(response);
+      alert("Form submitted successfully!");
+      setFormData({ ign: '', igid: '', email: '', whatsapp: '', name: '' });
+    })
+    .catch(error => {
+      alert("Submission failed");
+      console.error("Error:", error);
     });
-  };
-
+};
   return (
     <div className='formdiv'>
       <form className="form" onSubmit={handleSubmit}>
@@ -56,66 +53,26 @@ export default function Form() {
         <p className="title">Register</p>
         <div className="flex">
           <label>
-            <input
-              className="input"
-              type="text"
-              name="ign"
-              value={formData.ign}
-              onChange={handleChange}
-              required
-            />
+            <input className="input" type="text" name="ign" value={formData.ign} onChange={handleChange} required />
             <span>In-Game Name</span>
           </label>
-
           <label>
-            <input
-              className="input"
-              type="text"
-              name="igid"
-              value={formData.igid}
-              onChange={handleChange}
-              required
-            />
+            <input className="input" type="text" name="igid" value={formData.igid} onChange={handleChange} required />
             <span>In-Game ID</span>
           </label>
         </div>
-
         <label>
-          <input
-            className="input"
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
+          <input className="input" type="email" name="email" value={formData.email} onChange={handleChange} required />
           <span>Email</span>
         </label>
-
         <label>
-          <input
-            className="input"
-            type="number"
-            name="whatsapp"
-            value={formData.whatsapp}
-            onChange={handleChange}
-            required
-          />
+          <input className="input" type="number" name="whatsapp" value={formData.whatsapp} onChange={handleChange} required />
           <span>WhatsApp Number</span>
         </label>
-
         <label>
-          <input
-            className="input"
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
+          <input className="input" type="text" name="name" value={formData.name} onChange={handleChange} required />
           <span>Name</span>
         </label>
-
         <button className="submit" type="submit">Submit</button>
       </form>
     </div>
