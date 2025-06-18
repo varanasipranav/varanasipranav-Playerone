@@ -1,0 +1,67 @@
+
+  
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #1a1a1a;
+    border-radius: 50px;
+    color: white;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    color: #ffd700; /* gold color */
+    
+  }
+  
+  .intro {
+    font-size: 1.2rem;
+
+  }
+  
+  .details {
+    font-size: 1.1rem;
+
+    padding: 20px;
+    border-radius: 12px;
+    
+  }
+  
+  .rewards h2 {
+    
+    font-size: 2rem;
+    
+  }
+  .register-button{
+    border: none;
+    outline: none;
+    padding: 10px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+    background-color: #00bfff;
+  }
+  .rewards ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .rewards li {
+    font-size: 1.2rem;
+    margin: 10px 0;
+  }
+  
+  .note {
+    
+    color: #cccccc;
+    font-style: italic;
+  }
+  
+  .footer {
+    
+    font-size: 1rem;
+    color: #aaa;
+  }
