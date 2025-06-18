@@ -17,35 +17,30 @@ export default function Form() {
     }));
   };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  console.log(formData)
-
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbyeGBShHT1dn42DpuD6pu40zgZJIVxZXUZ4n5lMufcz/dev';
-
-  const urlEncodedData = new URLSearchParams();
-  for (let key in formData) {
-    urlEncodedData.append(key, formData[key]);
-  }
-
-  fetch(scriptURL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: urlEncodedData.toString(),
-  })
-    .then(res => res.json())
-    .then(response => {
-      console.log(response);
-      alert("Form submitted successfully!");
-      setFormData({ ign: '', igid: '', email: '', whatsapp: '', name: '' });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyq9UCbgqJq1LV7flfJyV1HxhpFkDkvWeVQ9eaoPimmX7jNIh7lvGQ5Lu3c2cswLRd7Pw/exec';
+  
+    fetch(scriptURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // Change content type to application/json
+      },
+      body: JSON.stringify(formData), // Send data as JSON string
     })
-    .catch(error => {
-      alert("Submission failed");
-      console.error("Error:", error);
-    });
-};
+      .then(res => res.json())
+      .then(response => {
+        console.log(response);
+        alert("Form submitted successfully!");
+        setFormData({ ign: '', igid: '', email: '', whatsapp: '', name: '' });
+      })
+      .catch(error => {
+        alert("Submission failed");
+        console.error("Error:", error);
+      });
+  };
   return (
     <div className='formdiv'>
       <form className="form" onSubmit={handleSubmit}>
