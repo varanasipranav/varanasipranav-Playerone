@@ -44,8 +44,7 @@ export default function Form() {
     const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLScP2snRBTRghgwwspXbAUGBAUjqpKNEI-zi01S1rL87IbWpyA/formResponse';
   
     const data = new FormData();
-    data.append('entry.545003216', formData.ign);        // In-Game Name
-    data.append('entry.114428379', formData.igid);       // In-Game ID
+    data.append('entry.114428379', formData.ign);        // In-Game Name   // In-Game ID
     data.append('entry.1936596211', formData.email);     // Email
     data.append('entry.965818943', formData.whatsapp);   // WhatsApp Number
     data.append('entry.610761749', formData.name);       // Name
@@ -86,17 +85,7 @@ export default function Form() {
             <span>In-Game Name</span>
           </label>
 
-          <label>
-            <input
-              className="input"
-              type="text"
-              name="igid"
-              value={formData.igid}
-              onChange={handleChange}
-              required
-            />
-            <span>In-Game ID</span>
-          </label>
+
         </div>
 
         <label>
