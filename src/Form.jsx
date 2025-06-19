@@ -19,55 +19,122 @@ export default function Form() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
   
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyq9UCbgqJq1LV7flfJyV1HxhpFkDkvWeVQ9eaoPimmX7jNIh7lvGQ5Lu3c2cswLRd7Pw/exec';
+    // Basic validation checks
+    if (!formData.name.trim()) {
+      alert('Name cannot be empty.');
+      return;
+    }
   
-    fetch(scriptURL, {
+    // Email format validation
+    const emailRegex = /.+@.+/;
+    if (!emailRegex.test(formData.email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+  
+    // WhatsApp number validation (exactly 10 digits)
+    const whatsappRegex = /^\d{10}$/;
+    if (!whatsappRegex.test(formData.whatsapp)) {
+      alert('WhatsApp number must be exactly 10 digits.');
+      return;
+    }
+  
+    // If all validations pass, proceed with form submission
+    const googleFormURL = 'https://docs.google.com/forms/d/e/1FAIpQLScP2snRBTRghgwwspXbAUGBAUjqpKNEI-zi01S1rL87IbWpyA/formResponse';
+  
+    const data = new FormData();
+    data.append('entry.545003216', formData.ign);        // In-Game Name
+    data.append('entry.114428379', formData.igid);       // In-Game ID
+    data.append('entry.1936596211', formData.email);     // Email
+    data.append('entry.965818943', formData.whatsapp);   // WhatsApp Number
+    data.append('entry.610761749', formData.name);       // Name
+  
+    fetch(googleFormURL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Change content type to application/json
-      },
-      body: JSON.stringify(formData), // Send data as JSON string
-    })
-      .then(res => res.json())
-      .then(response => {
-        console.log(response);
-        alert("Form submitted successfully!");
-        setFormData({ ign: '', igid: '', email: '', whatsapp: '', name: '' });
-      })
-      .catch(error => {
-        alert("Submission failed");
-        console.error("Error:", error);
+      mode: 'no-cors',
+      body: data
+    }).then(() => {
+      alert('✅ Submitted');
+      setFormData({
+        ign: '',
+        igid: '',
+        email: '',
+        whatsapp: '',
+        name: ''
       });
+    }).catch((error) => {
+      console.error('❌ Error!', error.message);
+    });
   };
+
   return (
     <div className='formdiv'>
       <form className="form" onSubmit={handleSubmit}>
-        <h2 className='Registration-Heading'>Pixel Gaming</h2>
+        <h2 className='Registration-Heading'>Player One</h2>
         <p className="title">Register</p>
         <div className="flex">
           <label>
-            <input className="input" type="text" name="ign" value={formData.ign} onChange={handleChange} required />
+            <input
+              className="input"
+              type="text"
+              name="ign"
+              value={formData.ign}
+              onChange={handleChange}
+              required
+            />
             <span>In-Game Name</span>
           </label>
+
           <label>
-            <input className="input" type="text" name="igid" value={formData.igid} onChange={handleChange} required />
+            <input
+              className="input"
+              type="text"
+              name="igid"
+              value={formData.igid}
+              onChange={handleChange}
+              required
+            />
             <span>In-Game ID</span>
           </label>
         </div>
+
         <label>
-          <input className="input" type="email" name="email" value={formData.email} onChange={handleChange} required />
+          <input
+            className="input"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
           <span>Email</span>
         </label>
+
         <label>
-          <input className="input" type="number" name="whatsapp" value={formData.whatsapp} onChange={handleChange} required />
+          <input
+            className="input"
+            type="number"
+            name="whatsapp"
+            value={formData.whatsapp}
+            onChange={handleChange}
+            required
+          />
           <span>WhatsApp Number</span>
         </label>
+
         <label>
-          <input className="input" type="text" name="name" value={formData.name} onChange={handleChange} required />
+          <input
+            className="input"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
           <span>Name</span>
         </label>
+
         <button className="submit" type="submit">Submit</button>
       </form>
     </div>

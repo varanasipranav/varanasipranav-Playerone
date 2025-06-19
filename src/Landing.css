@@ -8,6 +8,7 @@
     background-color: #1a1a1a;
     border-radius: 50px;
     color: white;
+    margin-top: 100px;
   }
   
   h1 {
@@ -65,3 +66,25 @@
     font-size: 1rem;
     color: #aaa;
   }
+
+@media (max-width: 600px) {
+ .container {
+ padding: 20px;
+ }
+
+ h1 {
+ font-size: 2rem;
+ }
+
+ .intro,
+ .details {
+ font-size: 1rem;
+ }
+
+ .rewards li {
+ font-size: 1rem;
+ }
+}
+
+
+
